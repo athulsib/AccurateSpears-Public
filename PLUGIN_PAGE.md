@@ -88,7 +88,7 @@
 - Charge attack damage scales with **relative velocity** between attacker and target
 - Fast-moving charges deal significantly more damage
 - Formula: `damage = charge_multiplier × relative_velocity × base_damage`
-- Copper spears have **speed requirements** (4.6 b/s for damage, 5.1 b/s for knockback)
+- All spears have **speed requirements** (4.6 b/s for damage, 5.1 b/s for knockback)
 
 #### Raycast Collision Detection
 - **Accurate hit detection** using multi-stage raycasting
