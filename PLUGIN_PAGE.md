@@ -177,7 +177,7 @@ All spears follow the same pattern:
 
 ## 🔧 **Comprehensive Configuration System** ⭐
 
-> **Accurate Spears features one of the most detailed and granular configuration systems available for a Minecraft combat plugin.** Every single mechanic, visual effect, combat parameter, and display option is fully customizable. The `config.yml` file is extensively documented with inline comments explaining every option, making it easy for server owners to fine-tune the plugin to match their server's exact needs.
+> **Accurate Spears features one of the most detailed and granular configuration systems available for a Minecraft combat plugin.** Every single mechanic, visual effect, combat parameter, and display option is fully customizable. The `config.yml` file is extensively documented with inline comments explaining every option, making it easy for server owners to fine-tune the plugin to match their server's exact needs. **With nearly 400 Lines of configuration**
 >
 > **From per-attack-type animation settings to granular cooldown scaling, per-spear statistics to tooltip customization - you have complete control.**
 
