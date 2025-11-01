@@ -1,4 +1,7 @@
-# Accurate Spears - Complete Documentation Index
+# Accurate Spears - Documentation Index
+
+**DISCLAIMER: This is a partial documentation, you will receive a complete documentation of the plugin, its features and API on purchase.**
+**Contact: @athulsib on discord for purchase**
 
 Welcome to the comprehensive documentation for **Accurate Spears**! This is your central hub for all plugin information, from quick-start guides to deep technical references.
 
@@ -160,16 +163,73 @@ Wooden → Stone → Copper → Iron → Golden → Diamond → Netherite
 
 ---
 
-## 🛠️ Configuration Quick Links
+## 🛠️ **Extremely Detailed Configuration System**
 
-### Key Config Options
-- `cooldown.jab/charge` - Force cooldown settings
-- `tooltip.format` - Vanilla vs detailed tooltips
-- `animations.enabled` - Visual feedback toggle
-- `bossbars.show_*` - Boss bar indicators
-- `debug_mode` - Verbose logging toggle
+**Accurate Spears features one of the most comprehensive configuration systems available.**
 
-See [Plugin Page](./PLUGIN_PAGE.md) for complete configuration guide.
+### Configuration Categories
+
+#### 🎯 Combat Mechanics
+- **Force Cooldown System**: Separate jab/charge cooldowns with base/min/max values, attack speed scaling multipliers
+- **Per-Spear Statistics**: Every tier's damage, speed, durability, charge multipliers, activation delays, stage durations
+- **Speed Requirements**: Configurable enforcement for copper spear damage/knockback requirements
+- **Hit Tracking**: Raycast exemptions, single-hit-per-charge enforcement
+
+#### 🎨 Visual & Audio Effects
+- **Per-Attack-Type Configuration**: 
+  - Jab Attack, Thrust Attack, Charge Start, Charge Stages 1/2/3, Charge Impact, Charge Release
+- **Per-Effect Control**: Particle types, counts, offsets, sound types, volumes, pitches for each effect
+- **Global Toggles**: Enable/disable all animations, particles, or sounds
+- **Boss Bar Indicators**: Optional charge progress and damage feedback
+
+#### 📝 Display & UI
+- **Tooltip Formats**: Vanilla (native attributes) or detailed (full lore)
+- **Optional Information**: Toggle display of DPS, durability, enchantability, reach, charge info, attack types
+- **Item Attributes**: Native Minecraft attribute display (green text like vanilla weapons)
+
+#### 🎣 Enchantment System
+- **Lunge Configuration**: Momentum, exhaustion costs, hunger requirements, environment restrictions, midair bonus
+- **Cooldown Settings**: Per-enchantment cooldown configuration
+
+#### 🐛 Debug & Testing
+- **Debug Mode**: Verbose logging with velocity calculations, hit tracking, raycast information
+
+### Configuration Examples
+
+**Combat Cooldowns**:
+```yaml
+cooldown:
+    jab:
+        base_ticks: 20
+        min_ticks: 10
+        max_ticks: 30
+        scale_with_attack_speed: true
+        attack_speed_multiplier: 1.0
+```
+
+**Per-Attack Animation**:
+```yaml
+jab_attack:
+    particles:
+        sweep_attack: {type: SWEEP_ATTACK, count: 1}
+        crit: {type: CRIT, count: 3, offset: 0.3}
+    sounds:
+        attack_sweep: {type: ENTITY_PLAYER_ATTACK_SWEEP, volume: 1.0, pitch: 1.2}
+```
+
+**Per-Spear Stats**:
+```yaml
+types:
+    DIAMOND:
+        attack_damage: 4.0
+        attack_speed: 0.95
+        charge_damage_multiplier: 1.075
+        activation_delay: 0.5
+        stage1_duration: 3.0
+        # ... and more
+```
+
+**See [Plugin Page - Configuration](./PLUGIN_PAGE.md#-comprehensive-configuration-system) for complete, detailed configuration guide.**
 
 ---
 

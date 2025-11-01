@@ -14,7 +14,7 @@
 - ✅ **Velocity-Based Damage** - Charge attacks scale with movement speed
 - ✅ **Multi-Stage Charge System** - Engaged (100%) → Tired (70%) → Disengaged (30%)
 - ✅ **Lunge Enchantment** - 3-level custom enchantment system
-- ✅ **Configurable Everything** - Cooldowns, tooltips, animations, boss bars
+- ✅ **⚙️ Extremely Detailed Configuration** - **One of the most comprehensive config systems available**: Per-attack-type animations, granular cooldowns, per-spear stats, tooltip customization, enchantment settings, and more
 - ✅ **Performance Optimized** - Built for high-performance servers
 - ✅ **Complete Resource Pack** - Professional animations and models
 
@@ -175,57 +175,274 @@ All spears follow the same pattern:
 
 ---
 
-## 🔧 Configuration
+## 🔧 **Comprehensive Configuration System** ⭐
 
-### Cooldown System
+> **Accurate Spears features one of the most detailed and granular configuration systems available for a Minecraft combat plugin.** Every single mechanic, visual effect, combat parameter, and display option is fully customizable. The `config.yml` file is extensively documented with inline comments explaining every option, making it easy for server owners to fine-tune the plugin to match their server's exact needs.
+>
+> **From per-attack-type animation settings to granular cooldown scaling, per-spear statistics to tooltip customization - you have complete control.**
+
+---
+
+### Why Our Configuration Stands Out
+
+- **📋 Inline Documentation**: Every config option includes comments explaining purpose and usage
+- **🎯 Granular Control**: Configure individual particle counts, sound volumes, attack speeds per tier
+- **🔄 Hot Reload**: All changes apply without server restart via `/spear reload`
+- **📊 Comprehensive Coverage**: Combat, visuals, tooltips, enchantments, timing - everything is configurable
+- **⚙️ Production Ready**: Balanced defaults provided, but full customization available
+
+### ⚙️ Configuration Overview
+
+**The plugin's `config.yml` is one of the most detailed and well-documented configuration files available.** Every single option includes inline comments explaining its purpose and usage. The configuration system provides **granular control** over:
+
+**Comprehensive configuration categories:**
+
+- **🎯 Combat Mechanics** - Cooldowns, speed requirements, hit tracking
+- **📊 Per-Spear Statistics** - Damage, speed, durability, charge multipliers for each tier
+- **🎨 Visual & Audio Effects** - Particle types, counts, offsets, sound types, volumes, pitches
+- **📝 Tooltip Customization** - Vanilla vs detailed formats, optional information display
+- **⏱️ Attack Timing** - Charge activation delays, stage durations
+- **🎣 Enchantment Settings** - Lunge momentum, exhaustion, hunger requirements
+- **📊 Feedback Systems** - Boss bars, debug mode, animation toggles
+
+---
+
+### 🎯 Combat Configuration
+
+#### Force Cooldown System
+**Granular control over attack cooldowns with multiple scaling options:**
+
 ```yaml
 cooldown:
     jab:
-        base_ticks: 20      # Base cooldown (1 second)
-        min_ticks: 10       # Minimum for fast spears
-        max_ticks: 30       # Maximum for slow spears
-        scale_with_attack_speed: true
-        attack_speed_multiplier: 1.0
+        base_ticks: 20                    # Base cooldown (1 second)
+        min_ticks: 10                     # Minimum (fastest spears)
+        max_ticks: 30                     # Maximum (slowest spears)
+        scale_with_attack_speed: true     # Enable attack speed scaling
+        attack_speed_multiplier: 1.0      # Scaling intensity
     
     charge:
-        base_ticks: 20
+        base_ticks: 20                    # Independent charge cooldown
         min_ticks: 10
         max_ticks: 30
         scale_with_attack_speed: true
         attack_speed_multiplier: 1.0
 ```
 
-### Tooltip Format
+**Formula**: `cooldown = clamp(base + (attackSpeed - 1.0) × multiplier × 10, min, max)`
+
+#### Speed Requirement Enforcement
+```yaml
+enforce_damage_speed_requirement: true       # Copper spears: require 4.6 b/s for damage
+enforce_knockback_speed_requirement: true    # Copper spears: require 5.1 b/s for knockback
+```
+
+#### Debug & Testing
+```yaml
+debug_mode: false  # Enable verbose debug messages with velocity calculations, hit tracking, etc.
+```
+
+---
+
+### 📝 Tooltip & Display Configuration
+
+**Complete control over how spears appear in inventory:**
+
 ```yaml
 tooltip:
-    format: vanilla  # "vanilla" or "detailed"
-    show_dps: false
-    show_durability: false
-    show_enchantability: false
-    show_attack_reach: false
-    show_charge_info: false
-    show_attack_types: false
+    format: vanilla  # "vanilla" (minimal, native attributes) or "detailed" (full lore)
+    
+    # Detailed format options (only applies when format: detailed)
+    show_dps: false              # Show damage per second calculation
+    show_durability: false       # Display durability in lore
+    show_enchantability: false   # Show enchantability stat
+    show_attack_reach: false     # Display reach range (2-4.5 blocks)
+    show_charge_info: false     # Show charge attack details
+    show_attack_types: false     # Display attack type descriptions
 ```
 
-### Animation Settings
+**Vanilla Format**: Attack damage and speed appear as native Minecraft item attributes (green text, like vanilla weapons)
+
+**Detailed Format**: Full lore with configurable additional information
+
+---
+
+### 🎨 Animation & Effect Configuration
+
+**Per-attack-type, per-effect granular control:**
+
+The animation system is **incredibly detailed** - you can configure:
+- **Global toggles**: Enable/disable all animations, particles, or sounds
+- **Per-attack-type settings**: Separate config for jab, thrust, charge start, charge stage 1/2/3, charge impact, charge release
+- **Per-effect control**: Individual particle types, counts, offsets, sound types, volumes, pitches
+
+#### Example: Jab Attack Configuration
 ```yaml
-animations:
+jab_attack:
     enabled: true
-    enable_particles: true
-    enable_sounds: true
-    # Per-attack-type configuration available
+    particles:
+        enabled: true
+        sweep_attack:
+            enabled: true
+            type: SWEEP_ATTACK
+            count: 1
+        crit:
+            enabled: true
+            type: CRIT
+            count: 3
+            offset: 0.3
+    sounds:
+        enabled: true
+        attack_sweep:
+            enabled: true
+            type: ENTITY_PLAYER_ATTACK_SWEEP
+            volume: 1.0
+            pitch: 1.2
+        attack_strong:
+            enabled: true
+            type: ENTITY_PLAYER_ATTACK_STRONG
+            volume: 0.8
+            pitch: 1.0
 ```
 
-### Debug Mode
+**Available attack types with full configuration**:
+- `jab_attack` - Left-click attacks
+- `thrust_attack` - Right-click single tap
+- `charge_start` - Charge initiation
+- `charge_stage1` - Engaged stage effects
+- `charge_stage2` - Tired stage effects
+- `charge_stage3` - Disengaged stage effects
+- `charge_impact_stage1/2/3` - Impact effects per stage
+- `charge_release` - Charge release effects
+
+**Each includes**: Particles (type, count, offset) and Sounds (type, volume, pitch)
+
+---
+
+### 📊 Per-Spear-Type Statistics
+
+**Fully customizable stats for each spear tier:**
+
 ```yaml
-debug_mode: false  # Enable verbose debug messages for testing
+types:
+    WOODEN:
+        attack_damage: 1.0
+        attack_speed: 1.54
+        base_material: WOODEN_SWORD
+        durability: 59
+        enchantability: 15
+        charge_damage_multiplier: 0.7
+        activation_delay: 0.75
+        total_charge_duration: 15.0
+        stage1_duration: 5.0
+        stage2_duration: 1.0
+        stage3_duration: 9.0
+        dismount_speed_requirement: 14.0
+        knockback_speed_requirement: 5.1
+        damage_speed_requirement: 4.6
+    # ... same for all 7 tiers
 ```
 
-### Speed Requirements
+**Configurable per tier**:
+- Base attack damage and speed
+- Durability and enchantability
+- Charge damage multiplier
+- Charge activation delay
+- Stage durations (total, stage 1, stage 2, stage 3)
+- Speed requirements (dismount, knockback, damage)
+
+---
+
+### 🎣 Lunge Enchantment Configuration
+
+**Complete control over the custom enchantment system:**
+
 ```yaml
-enforce_damage_speed_requirement: true   # Copper spears need speed for damage
-enforce_knockback_speed_requirement: true # Copper spears need speed for knockback
+lunge:
+    enabled: true
+    base_momentum: 0.458              # Horizontal momentum per level
+    vertical_y_boost: 0.0              # Optional vertical boost
+    exhaustion_base: 8.0               # Base exhaustion cost
+    exhaustion_per_level: 4.0          # Additional exhaustion per level
+    min_hunger_required: 6             # Minimum food points needed
+    allow_on_mount: false              # Can use while mounted
+    allow_gliding: false                # Can use while gliding
+    allow_in_water: false              # Can use in water
+    midair_bonus_enabled: true         # Enable midair multiplier
+    midair_bonus_multiplier: 1.5       # Midair bonus strength
+    play_sound: true                    # Sound feedback
+    sound: ITEM_TRIDENT_THROW          # Sound type
+    play_particles: true                # Particle feedback
+    cooldown_ticks: 20                 # Lunge cooldown
 ```
+
+---
+
+### 📊 Boss Bar Feedback
+
+**Optional visual indicators for charge progress:**
+
+```yaml
+bossbars:
+    show_charge_bar: true    # Show progress bar during charge
+    show_damage_bar: true     # Show damage dealt with charge attacks
+```
+
+---
+
+### 🔄 Reloading Configuration
+
+All configuration changes can be applied **without server restart**:
+
+```bash
+/spear reload
+```
+
+This reloads:
+- All cooldown settings
+- Animation configurations
+- Tooltip formats
+- Per-spear statistics
+- Lunge enchantment settings
+- Debug mode
+- Speed requirement enforcement
+
+---
+
+### 💡 Configuration Tips
+
+1. **Start with defaults**: The plugin comes with balanced defaults for all settings
+2. **Use debug mode**: Enable `debug_mode: true` to see detailed combat calculations
+3. **Per-spear fine-tuning**: Adjust individual spear stats to balance your server's economy
+4. **Animation performance**: Disable particles/sounds if experiencing lag on lower-end servers
+5. **Tooltip format**: Use "vanilla" for cleaner UI, "detailed" for informative displays
+
+---
+
+### 📋 Configuration Checklist
+
+**Combat Balance**:
+- [ ] Adjust cooldown base/min/max values
+- [ ] Enable/disable speed requirement enforcement
+- [ ] Tune per-spear damage/speed multipliers
+- [ ] Configure charge stage durations
+
+**Visual Customization**:
+- [ ] Choose tooltip format (vanilla/detailed)
+- [ ] Configure animation particles and sounds
+- [ ] Enable/disable boss bar indicators
+- [ ] Adjust per-attack-type visual effects
+
+**Enchantment System**:
+- [ ] Configure Lunge momentum values
+- [ ] Set exhaustion and hunger requirements
+- [ ] Adjust midair bonus multiplier
+- [ ] Configure environment restrictions
+
+**Performance**:
+- [ ] Disable animations if needed
+- [ ] Disable debug mode in production
+- [ ] Adjust particle counts for lower-end servers
 
 ---
 
